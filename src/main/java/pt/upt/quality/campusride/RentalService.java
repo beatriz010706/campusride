@@ -8,14 +8,22 @@ public class RentalService {
     }
 
     public void rentVehicle(String id) {
-        throw new UnsupportedOperationException("rentVehicle not implemented");
+        findOrFail(id).rent();
     }
 
     public void returnVehicle(String id) {
-        throw new UnsupportedOperationException("returnVehicle not implemented");
+        findOrFail(id).returnVehicle();
     }
 
     public double estimatePrice(String id, int minutes) {
-        throw new UnsupportedOperationException("estimatePrice not implemented");
+        return findOrFail(id).calculatePrice(minutes);
+    }
+
+    private Vehicle findOrFail(String id) {
+        Vehicle vehicle = fleet.findById(id);
+        if (vehicle == null) {
+            throw new IllegalArgumentException("Unknown vehicle: " + id);
+        }
+        return vehicle;
     }
 }
